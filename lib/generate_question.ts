@@ -28,11 +28,11 @@ export async function generateQuestions(topic: string, count: number = 5): Promi
     Always format your output as a JSON array of objects with the following format and no other text or preamble:
     [
         {
-            "scratch": "Think about what question you would want to ask, how can you be clever and tricky. Explain in detail how someone who is familiar with the series might get tripped up by a question like this and think through some other plausible alternatives a person who is informed may know.",
-            "incorrectStatement": "...",
-            "explanation": "...",
-            "correctStatement": "...",
-            "alternatives": ["...", "..."]
+            "scratch": "Think about what question you would want to ask, how can you be clever and tricky. Explain in detail how someone who is familiar with the series might get tripped up by a question like this and think through some other plausible alternatives a person who is informed may get confused by.",
+            "explanation": "The explanation for why the question is incorrect. It should be specific and detailed enough to be clear why the alternatives are wrong and include interesting fun trivia",
+            "correctStatement": "The correct version of the statement which will be used as the correct answer for the multipe choices quiz.",
+            "alternatives": ["alternatives that are full examples of statements that are incorrect for similar reasons tol the main question this will be used as altrnatives in multiple choice quesitions", "..."] ,
+            "incorrectStatement": "the main incorrect statement that the player needs to correct. Consider everything you've thought of so far"
         },
         {
             //next question
