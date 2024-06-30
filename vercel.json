@@ -1,6 +1,6 @@
 {
     "functions": {
-      "api/generate-questions/*.ts": {
+      "app/api/generate-questions/*.ts": {
         "maxDuration": 60
       }
     }
