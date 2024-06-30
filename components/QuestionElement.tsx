@@ -15,7 +15,7 @@ export default function QuestionElement({ question, onAnswer, feedback, answerSu
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 space-y-6">
       <p className="text-2xl font-semibold text-gray-800">{question.incorrectStatement}</p>
-      <p className="text-xl font-medium text-gray-700">What's wrong with this statement?</p>
+      <p className="text-xl font-medium text-gray-700">What&apos;s wrong with this statement?</p>
       <div className="space-y-3">
         {shuffledOptions.map((option, index) => (
           <button

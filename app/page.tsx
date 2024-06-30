@@ -6,7 +6,7 @@ export default function Home() {
       <h1 className="text-6xl font-bold mb-8 text-center">Welcome to the Almost True Game!</h1>
       <p className="text-xl mb-8 text-center max-w-2xl">
         Test your knowledge and critical thinking skills with our unique trivia game. 
-        Can you spot what's wrong in almost true statements?
+        Can you spot what&apos;s wrong in almost true statements?
       </p>
       <Link href="/topic" className="bg-white text-blue-600 font-bold py-3 px-6 rounded-full text-xl hover:bg-blue-100 transition duration-300">
         Start a New Game
