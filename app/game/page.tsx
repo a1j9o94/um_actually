@@ -2,11 +2,11 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import GameController from '@/components/GameController'
 import { Quiz, Question } from '@/lib/generate_question'
 
-export default function GamePage() {
+function GameContent() {
   const searchParams = useSearchParams()
   const topic = searchParams.get('topic')
   const [quiz, setQuiz] = useState<Quiz>()
@@ -75,5 +75,13 @@ export default function GamePage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function GamePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GameContent />
+    </Suspense>
   )
 }
