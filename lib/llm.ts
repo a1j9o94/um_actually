@@ -33,7 +33,7 @@ export async function callLLM(messages: LLMConversation, retryCount = 0): Promis
         messages: messages.messages,
       })
 
-      const raw_response = msg.content[0].text;
+      const raw_response = (msg.content[0] as any).text;
 
       console.log("Raw response: ", raw_response);
   
