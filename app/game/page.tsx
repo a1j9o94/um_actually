@@ -30,6 +30,7 @@ function GameContent() {
       })
 
       if (!response.ok) {
+        console.error('Failed to fetch questions', response);
         throw new Error('Failed to fetch questions')
       }
 
@@ -37,7 +38,7 @@ function GameContent() {
 
       console.log('Data:', data);
       const quiz: Quiz = {
-        questions: data.quiz,
+        questions: data.quiz.questions, // Change this line
         topic: topic
       }
 
@@ -68,7 +69,7 @@ function GameContent() {
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Game: {topic}</h1>
-        {quiz && quiz.questions.length > 0 ? (
+        {quiz && Array.isArray(quiz.questions) && quiz.questions.length > 0 ? ( // Change this line
           <GameController questions={quiz.questions} />
         ) : (
           <div className="text-center text-2xl text-gray-600">No questions available. Please try a different topic.</div>

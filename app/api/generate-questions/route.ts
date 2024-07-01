@@ -10,6 +10,7 @@ export async function POST(request: Request) {
 
   try {
     const quiz = await generateQuestions(topic)
+    console.log("quiz", quiz);
     return NextResponse.json({ quiz })
   } catch (error) {
     console.error('Error generating questions:', error)
