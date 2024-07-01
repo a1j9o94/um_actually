@@ -75,27 +75,27 @@ export async function generateQuestions(topic: string, count: number = 5): Promi
     };
 
     const completion = await callLLM(conversation, 3);
-    const json_object = JSON.parse(completion) as Quiz;
-    json_object.topic = topic;
+    const questions = JSON.parse(completion) as Question[];
+    const quiz: Quiz = { topic, questions };
 
     const supabase_object = {
-        topic: json_object.topic,
-        questions: completion // Convert the questions array to a JSON string
-    }
+        topic: quiz.topic,
+        questions: JSON.stringify(quiz.questions) // Store questions as a JSON string
+    };
 
     console.log("supabase_object", supabase_object);
 
     // Store the new quiz in the database
-    const { error: insertError } = await supabase
-    .from('quizzes')
-    .insert(supabase_object)  
-    .select()
-    .single();
+    const { data: newQuiz, error: insertError } = await supabase
+        .from('quizzes')
+        .insert(supabase_object)
+        .select()
+        .single();
 
     if (insertError) {
         console.error('Error inserting new quiz into database:', insertError);
     } else {
         console.log('Successfully stored new quiz in database');
     }
-    return json_object;
+    return quiz; // Return the quiz object, not json_object
 }

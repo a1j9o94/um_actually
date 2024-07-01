@@ -19,7 +19,7 @@ function GameContent() {
     }
   }, [topic])
 
-  const fetchQuestions: (topic: string) => Promise<void> = async (topic: string) => {
+  const fetchQuestions = async (topic: string) => {
     try {
       const response = await fetch('/api/generate-questions', {
         method: 'POST',
@@ -28,22 +28,13 @@ function GameContent() {
         },
         body: JSON.stringify({ topic }),
       })
-
       if (!response.ok) {
         console.error('Failed to fetch questions', response);
         throw new Error('Failed to fetch questions')
       }
-
-      const data = await response.json()
-
-      console.log('Data:', data);
-      const quiz: Quiz = {
-        questions: data.quiz.questions, // Change this line
-        topic: topic
-      }
-
-      setQuiz(quiz)
-      console.log('Quiz object after setting:', quiz);
+      const quizData = await response.json()
+      console.log('Quiz data:', quizData);
+      setQuiz(quizData)
       setLoading(false)
     } catch (err) {
       setError('Failed to load questions. Please try again.')
@@ -69,7 +60,7 @@ function GameContent() {
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Game: {topic}</h1>
-        {quiz && Array.isArray(quiz.questions) && quiz.questions.length > 0 ? ( // Change this line
+        {quiz && Array.isArray(quiz.questions) && quiz.questions.length > 0 ? ( 
           <GameController questions={quiz.questions} />
         ) : (
           <div className="text-center text-2xl text-gray-600">No questions available. Please try a different topic.</div>
