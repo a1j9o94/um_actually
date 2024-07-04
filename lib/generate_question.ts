@@ -93,7 +93,8 @@ export async function generateQuestions(topic: string, count: number = 5): Promi
     const supabase_object = {
         topic: quiz.topic,
         presentation_topic: quiz.presentation_topic,
-        questions: JSON.stringify(quiz.questions) // Store questions as a JSON string
+        questions: JSON.stringify(quiz.questions), // Store questions as a JSON string
+        number_of_plays: 1 //initialize number of plays to 1
     };
 
     console.log("supabase_object", supabase_object);
@@ -105,8 +106,25 @@ export async function generateQuestions(topic: string, count: number = 5): Promi
         .select()
         .single();
 
+
+
     if (insertError) {
         console.error('Error inserting new quiz into database:', insertError);
+        // If insert fails due to duplicate, try to fetch the existing quiz
+        if (insertError.code === '23505') { // Unique constraint violation
+            const { data: existingQuiz, error: fetchError } = await supabase
+                .from('quizzes')
+                .select('*')
+                .eq('topic', modified_topic)
+                .single();
+            
+            if (fetchError) {
+                console.error('Error fetching existing quiz:', fetchError);
+                throw fetchError;
+            }
+            return existingQuiz;
+        }
+        throw insertError;
     } else {
         console.log('Successfully stored new quiz in database');
     }

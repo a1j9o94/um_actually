@@ -63,14 +63,6 @@ export default function GameController({ questions }: GameControllerProps) {
         feedback={feedback}
         answerSubmitted={answerSubmitted}
       />
-      {showExplanation && (
-        <div className="mt-6 p-4 bg-gray-100 rounded-lg">
-          <h3 className="text-xl font-bold mb-2 text-gray-800">Explanation:</h3>
-          <p className="text-gray-800">{questions[currentQuestionIndex].explanation}</p>
-          <h3 className="text-xl font-bold mt-4 mb-2 text-gray-800">Scratch Work:</h3>
-          <p className="text-gray-800">{questions[currentQuestionIndex].scratch}</p>
-        </div>
-      )}
       {answerSubmitted && (
         <div className="mt-6 text-center">
           <button
@@ -79,6 +71,14 @@ export default function GameController({ questions }: GameControllerProps) {
           >
             Next Question
           </button>
+        </div>
+      )}
+      {showExplanation && (
+        <div className="mt-6 p-4 bg-gray-100 rounded-lg">
+          <h3 className="text-xl font-bold mb-2 text-gray-800">Explanation:</h3>
+          <p className="text-gray-800">{questions[currentQuestionIndex].explanation}</p>
+          <h3 className="text-xl font-bold mt-4 mb-2 text-gray-800">Scratch Work:</h3>
+          <p className="text-gray-800">{questions[currentQuestionIndex].scratch}</p>
         </div>
       )}
     </div>

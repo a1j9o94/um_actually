@@ -4,8 +4,9 @@
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState, Suspense } from 'react'
 import GameController from '@/components/GameController'
-import { Quiz, Question } from '@/lib/generate_question'
+import { Quiz} from '@/lib/generate_question'
 import Link from 'next/link'
+import Image from 'next/image'
 
 function GameContent() {
   const searchParams = useSearchParams()
@@ -46,10 +47,22 @@ function GameContent() {
     }
   }
 
+  
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="text-2xl font-bold text-gray-600">Loading questions...</div>
-    </div>
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <Image
+          src="/loading-spinner.gif"
+          alt="Loading..."
+          width={100}
+          height={100}
+          loader={({ src, width }) => `${src}?w=${width}`}
+          placeholder="blur"
+          blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+        />
+        <p className="mt-4 text-xl font-semibold text-gray-600">Loading questions...</p>
+      </div>
+    )
   }
 
   if (error) {
