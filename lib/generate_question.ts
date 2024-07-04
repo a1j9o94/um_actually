@@ -11,15 +11,20 @@ export type Question = {
 
 export type Quiz = {
     topic: string;
+    presentation_topic: string;
     questions: Question[];
+    number_of_plays?: number;
 }
 
 export async function generateQuestions(topic: string, count: number = 5): Promise<Quiz> {
+    
+    const modified_topic = topic.toLowerCase().replace(/\s/g, '').replace(/[^a-zA-Z0-9]/g, '');
+
     // First, check if we have questions for this topic in the database
     const { data: existingQuiz, error } = await supabase
         .from('quizzes')
         .select('*')
-        .eq('topic', topic)
+        .eq('topic', modified_topic)
         .single();
 
     if (error && error.code !== 'PGRST116') {
@@ -30,13 +35,20 @@ export async function generateQuestions(topic: string, count: number = 5): Promi
         console.log('Found existing quiz for topic:', topic);
         console.log("existingQuiz", existingQuiz);
 
-        const quiz_object: Quiz = {
-            topic: existingQuiz.topic,
-            questions: JSON.parse(existingQuiz.questions as string)
+        //increment the number of plays
+        const { data: updatedQuiz, error: updateError } = await supabase
+            .from('quizzes')
+            .update({ number_of_plays: existingQuiz.number_of_plays + 1 })
+            .eq('topic', modified_topic)
+            .select()
+            .single();
+
+        //check for an error
+        if (updateError) {
+            console.error('Error updating quiz in database:', updateError);
         }
 
-        console.log("quiz_object", quiz_object);
-        return quiz_object;
+        return updatedQuiz;
     }
 
     console.log('Generating new questions for topic:', topic);
@@ -76,10 +88,11 @@ export async function generateQuestions(topic: string, count: number = 5): Promi
 
     const completion = await callLLM(conversation, 3);
     const questions = JSON.parse(completion) as Question[];
-    const quiz: Quiz = { topic, questions };
+    const quiz: Quiz = { topic: modified_topic, presentation_topic: topic, questions };
 
     const supabase_object = {
         topic: quiz.topic,
+        presentation_topic: quiz.presentation_topic,
         questions: JSON.stringify(quiz.questions) // Store questions as a JSON string
     };
 
@@ -97,5 +110,5 @@ export async function generateQuestions(topic: string, count: number = 5): Promi
     } else {
         console.log('Successfully stored new quiz in database');
     }
-    return quiz; // Return the quiz object, not json_object
+    return newQuiz; // Return the quiz object, not json_object
 }

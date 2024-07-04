@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState, Suspense } from 'react'
 import GameController from '@/components/GameController'
 import { Quiz, Question } from '@/lib/generate_question'
+import Link from 'next/link'
 
 function GameContent() {
   const searchParams = useSearchParams()
@@ -34,9 +35,12 @@ function GameContent() {
       }
       const quizData = await response.json()
       console.log('Quiz data:', quizData);
+      // Parse the questions string into an array
+      quizData.questions = JSON.parse(quizData.questions);
       setQuiz(quizData)
       setLoading(false)
     } catch (err) {
+      console.error('Error fetching or parsing questions:', err);
       setError('Failed to load questions. Please try again.')
       setLoading(false)
     }
@@ -59,6 +63,7 @@ function GameContent() {
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
+        <Link href="/" className="text-2xl font-bold text-gray-600">Back to home</Link>
         <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Game: {topic}</h1>
         {quiz && Array.isArray(quiz.questions) && quiz.questions.length > 0 ? ( 
           <GameController questions={quiz.questions} />
