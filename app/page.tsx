@@ -6,6 +6,7 @@ export const revalidate = 0
 
 export default async function Home() {
   const quizzes = await getQuizRecommendations()
+  console.log(quizzes)
 
   return (
     <main className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white py-12 px-4 sm:px-6 lg:px-8">
