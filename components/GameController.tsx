@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react'
 import QuestionElement from './QuestionElement'
 import { Question } from '@/lib/generate_question'
 import OutcomeElement from './OutcomeElement'
@@ -14,6 +14,15 @@ export default function GameController({ questions }: GameControllerProps) {
   const [feedback, setFeedback] = useState<string | null>(null)
   const [showExplanation, setShowExplanation] = useState(false)
   const [answerSubmitted, setAnswerSubmitted] = useState(false)
+  const [shuffledOptions, setShuffledOptions] = useState<string[][]>([])
+
+  useEffect(() => {
+    const shuffled = questions.map(question => {
+      const allOptions = [question.correctStatement, ...question.alternatives]
+      return allOptions.sort(() => Math.random() - 0.5)
+    })
+    setShuffledOptions(shuffled)
+  }, [questions])
 
   const handleAnswer = (answer: string) => {
     const isCorrect = answer === questions[currentQuestionIndex].correctStatement
@@ -62,6 +71,7 @@ export default function GameController({ questions }: GameControllerProps) {
         onAnswer={handleAnswer}
         feedback={feedback}
         answerSubmitted={answerSubmitted}
+        shuffledOptions={shuffledOptions[currentQuestionIndex] || []}
       />
       {answerSubmitted && (
         <div className="mt-6 text-center">

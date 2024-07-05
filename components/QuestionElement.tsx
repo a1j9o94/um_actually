@@ -3,14 +3,13 @@ import { Question } from '@/lib/generate_question'
 
 type QuestionElementProps = {
   question: Question
+  shuffledOptions: string[]
   onAnswer: (answer: string) => void
   feedback: string | null
   answerSubmitted: boolean
 }
 
-export default function QuestionElement({ question, onAnswer, feedback, answerSubmitted }: QuestionElementProps) {
-  const allOptions = [question.correctStatement, ...question.alternatives]
-  const shuffledOptions = allOptions.sort(() => Math.random() - 0.5)
+export default function QuestionElement({ question, shuffledOptions, onAnswer, feedback, answerSubmitted }: QuestionElementProps) {
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 space-y-6">
