@@ -2,6 +2,8 @@ import React, { useState, useEffect} from 'react'
 import QuestionElement from './QuestionElement'
 import { Question } from '@/lib/generate_question'
 import OutcomeElement from './OutcomeElement'
+import Image from 'next/image'
+import Link from 'next/link'
 
 type GameControllerProps = {
   questions: Question[]
@@ -50,12 +52,19 @@ export default function GameController({ questions }: GameControllerProps) {
     return (
       <div className="text-center bg-white shadow-lg rounded-lg p-8">
         <OutcomeElement score={score} questions={questions.length} />
-        <button
-          onClick={() => window.location.href = '/'}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
-        >
-          Play Again
-        </button>
+        <Link href="https://ko-fi.com/X8X3105D4P" target="_blank" rel="noopener noreferrer" className="inline-block my-4">
+          <Image
+            src="https://storage.ko-fi.com/cdn/kofi1.png?v=3"
+            alt="Buy Me a Coffee at ko-fi.com"
+            width={136}
+            height={36}
+          />
+        </Link>
+        <div>
+          <Link href="/" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+            Play Again
+          </Link>
+        </div>
       </div>
     )
   }
