@@ -13,7 +13,7 @@ export type Quiz = {
     topic: string;
     presentation_topic: string;
     questions: Question[];
-    number_of_plays?: number;
+    number_of_plays: number;
 }
 
 export async function generateQuestions(topic: string, count: number = 5): Promise<Quiz> {
@@ -88,7 +88,7 @@ export async function generateQuestions(topic: string, count: number = 5): Promi
 
     const completion = await callLLM(conversation, 3);
     const questions = JSON.parse(completion) as Question[];
-    const quiz: Quiz = { topic: modified_topic, presentation_topic: topic, questions };
+    const quiz: Quiz = { topic: modified_topic, presentation_topic: topic, questions, number_of_plays: 1 };
 
     const supabase_object = {
         topic: quiz.topic,
