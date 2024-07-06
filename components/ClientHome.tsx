@@ -42,7 +42,7 @@ export default function ClientHome({ quizzes }: ClientHomeProps) {
                 className="mt-6 bg-blue-600 text-white font-bold py-3 px-6 rounded-full text-xl hover:bg-blue-700 transition duration-300 w-full"
                 onClick={() => setShowHowToPlay(false)}
               >
-                Got it, let's play!
+                Got it, let&apos;s play!
               </button>
             </div>
           </div>
