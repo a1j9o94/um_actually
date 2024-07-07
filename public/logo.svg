@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#ffffff"/>
+  <text x="2" y="24" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#000000">NQ</text>
+  <path d="M2 28 Q 5 25, 8 28 T 14 28 T 20 28 T 26 28" stroke="#3b82f6" stroke-width="2" fill="none"/>
+</svg>
